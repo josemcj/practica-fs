@@ -87,15 +87,18 @@ const addCandidato = async (req, res) => {
  * @param {string}  req.params.id         Candidate's ID.
  * @param {string}  req.body.nombre       Candidate's name.
  * @param {array}   req.body.habilidades  Technologies that the candidate knows.
+ * @param {object}  req.body.fecha_entrevista Original date.
+ * @param {number}  req.body.fecha_entrevista._seconds
+ * @param {number}  req.body.fecha_entrevista._nanoseconds
  */
 const editCandidato = async (req, res) => {
   const { id } = req.params;
-  const { nombre, habilidades } = req.body;
+  const { nombre, habilidades, fecha_entrevista } = req.body;
 
   try {
     const candidato = db.collection('candidatos').doc(id);
 
-    await candidato.set({ nombre, habilidades });
+    await candidato.set({ nombre, habilidades, fecha_entrevista });
     res.status(200).json({
       message: 'Candidato modificado correctamente',
     });

@@ -16,6 +16,7 @@ function App() {
   const [animarModal, setAnimarModal] = useState(false);
   const [candidatosList, setCandidatosList] = useState([]);
   const [candidatoSelected, setCandidatoSelected] = useState({});
+  const [docActualizado, setDocActualizado] = useState(false);
 
   /**
    * Abre el modal y añade animación de apertura.
@@ -49,7 +50,8 @@ function App() {
     };
 
     getCandidatos();
-  }, []);
+    setDocActualizado(false);
+  }, [docActualizado]);
 
   return (
     <div className="container min-h-screen flex flex-col justify-center">
@@ -62,10 +64,10 @@ function App() {
           animarModal={animarModal}
           closeModal={closeModal}
           candidato={candidatoSelected}
+          setDocActualizado={setDocActualizado}
         />
       )}
 
-      {/* <CardCandidato openModal={openModal} /> */}
       {candidatosList.map((candidato) => (
         <CardCandidato
           key={candidato.id}
