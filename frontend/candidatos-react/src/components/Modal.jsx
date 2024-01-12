@@ -1,13 +1,16 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { formatearFecha } from '../helpers';
 import { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { formatearFecha } from '../helpers';
+import InputHabilidades from './InputHabilidades';
+import Alerta from './Alerta';
 
 const URL_API =
   'https://us-central1-practica-web-full-stack.cloudfunctions.net/app/api';
 
 function Modal({ animarModal, closeModal, candidato, setDocActualizado }) {
-  const { id, nombre, fecha_entrevista, habilidades } = candidato;
+  const { id, nombre, fecha_entrevista } = candidato;
+  let { habilidades } = candidato;
   const urlApiEditar = `${URL_API}/candidato/${id}/editar`;
 
   // Con esto sabemos si se modificaron las habilidades
@@ -16,6 +19,16 @@ function Modal({ animarModal, closeModal, candidato, setDocActualizado }) {
   // Arreglo con las nuevas habilidades
   const [habilidadesModificadasArr, setHabilidadesModificadasArr] =
     useState(habilidades);
+
+  // Si de va a agregar una nueva habilidad es true
+  const [agregandoHabilidad, setAgregandoHabilidad] = useState(false);
+
+  // Abrir o cerrar la alerta
+  const [alertaState, setAlertaState] = useState({
+    open: false,
+    msg: '',
+    error: false,
+  });
 
   /**
    * Elimina una habilidad del arreglo.
@@ -62,15 +75,35 @@ function Modal({ animarModal, closeModal, candidato, setDocActualizado }) {
 
       const responseData = await response.json();
       setDocActualizado(true);
-      console.log(responseData);
+
+      setAgregandoHabilidad(false);
+      setHabilidadesModificadas(false);
+      habilidades = [...habilidadesModificadasArr];
+
+      // Alerta
+      setAlertaState({ open: true, msg: responseData.message, error: false });
+      setTimeout(() => {
+        setAlertaState({ open: false, msg: '', error: false });
+      }, 3000);
     } catch (error) {
-      console.log(error);
+      // Alerta
+      setAlertaState({ open: true, msg: error, error: true });
+      setTimeout(() => {
+        setAlertaState({ open: false, msg: '', error: false });
+      }, 3000);
     }
   };
 
   const handleDeshacerCambios = () => {
-    setHabilidadesModificadasArr(habilidades);
     setHabilidadesModificadas(false);
+    setAgregandoHabilidad(false);
+    setHabilidadesModificadasArr([...habilidades]);
+  };
+
+  const handleAgregarHabBtn = () => {
+    !agregandoHabilidad
+      ? setAgregandoHabilidad(true)
+      : setAgregandoHabilidad(false);
   };
 
   return (
@@ -93,6 +126,10 @@ function Modal({ animarModal, closeModal, candidato, setDocActualizado }) {
           Información del candidato
         </h1>
 
+        {alertaState.open && (
+          <Alerta mensaje={alertaState.msg} error={alertaState.error} />
+        )}
+
         {/* Nombre y fecha de entrevista */}
         <div className="flex gap-8 mb-8">
           <div>
@@ -109,7 +146,23 @@ function Modal({ animarModal, closeModal, candidato, setDocActualizado }) {
           </div>
         </div>
 
-        <h3 className="font-bold text-2xl mb-3">Habilidades</h3>
+        <div className="flex gap-3 mb-3 justify-between">
+          <h3 className="font-bold text-2xl w-3/4">Habilidades</h3>
+
+          <FontAwesomeIcon
+            icon={!agregandoHabilidad ? faPlus : faXmark}
+            style={{ color: '#0f172a' }}
+            className="p-2 h-3 w-3 md:h-5 md:w-5 bg-slate-100 hover:bg-slate-200 transition-all rounded-full cursor-pointer"
+            onClick={handleAgregarHabBtn}
+          />
+        </div>
+
+        {agregandoHabilidad && (
+          <InputHabilidades
+            habilidadesModificadasArr={habilidadesModificadasArr}
+            setHabilidadesModificadasArr={setHabilidadesModificadasArr}
+          />
+        )}
 
         {habilidadesModificadasArr.length ? (
           <ul className="list-disc list-inside">
@@ -134,7 +187,7 @@ function Modal({ animarModal, closeModal, candidato, setDocActualizado }) {
           <div className="flex gap-3 mt-8">
             <button
               className="p-2 border border-gray-300 bg-white hover:bg-gray-300 transition-all rounded w-1/2"
-              onClick={() => handleDeshacerCambios()}
+              onClick={handleDeshacerCambios}
             >
               Deshacer cambios
             </button>
