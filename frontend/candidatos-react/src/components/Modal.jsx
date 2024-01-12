@@ -30,6 +30,8 @@ function Modal({ animarModal, closeModal, candidato, setDocActualizado }) {
     error: false,
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   /**
    * Elimina una habilidad del arreglo.
    * @param {string} habilidad Habilidad a eliminar.
@@ -65,6 +67,7 @@ function Modal({ animarModal, closeModal, candidato, setDocActualizado }) {
       fecha_entrevista,
     };
     try {
+      setIsLoading(true);
       const response = await fetch(urlApiEditar, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -80,12 +83,14 @@ function Modal({ animarModal, closeModal, candidato, setDocActualizado }) {
       setHabilidadesModificadas(false);
       habilidades = [...habilidadesModificadasArr];
 
+      setIsLoading(false);
       // Alerta
       setAlertaState({ open: true, msg: responseData.message, error: false });
       setTimeout(() => {
         setAlertaState({ open: false, msg: '', error: false });
       }, 3000);
     } catch (error) {
+      setIsLoading(false);
       // Alerta
       setAlertaState({ open: true, msg: error, error: true });
       setTimeout(() => {
@@ -196,7 +201,7 @@ function Modal({ animarModal, closeModal, candidato, setDocActualizado }) {
               className="bg-slate-900 hover:bg-slate-800 text-white w-1/2 rounded p-2 transition-all"
               onClick={() => handleGuardarCambios()}
             >
-              Guardar cambios
+              {isLoading ? 'Guardando...' : 'Guardar'}
             </button>
           </div>
         )}
