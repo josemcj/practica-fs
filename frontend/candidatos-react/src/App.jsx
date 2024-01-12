@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CardCandidato from './components/CardCandidato';
 import Modal from './components/Modal';
+
+const URL_API_CANDIDATOS =
+  'https://us-central1-practica-web-full-stack.cloudfunctions.net/app/api/candidatos';
 
 function App() {
   /**
@@ -9,9 +12,12 @@ function App() {
    * `true`: Modal abierto.
    */
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // Nos ayuda a agregar animación.
+  // Ayuda a agregar animación.
   const [animarModal, setAnimarModal] = useState(false);
 
+  /**
+   * Abre el modal y añade animación de apertura.
+   */
   const openModal = () => {
     setIsModalOpen(true);
     setTimeout(() => {
@@ -19,12 +25,26 @@ function App() {
     }, 0);
   };
 
+  /**
+   * Cierra el modal y añade animación de cierre.
+   */
   const closeModal = () => {
     setAnimarModal(false);
     setTimeout(() => {
       setIsModalOpen(false);
     }, 300);
   };
+
+  useEffect(() => {
+    const getCandidatos = async () => {
+      const respuesta = await fetch(URL_API_CANDIDATOS);
+      const resultado = await respuesta.json();
+
+      console.log(resultado);
+    };
+
+    getCandidatos();
+  }, []);
 
   return (
     <div className="container min-h-screen flex flex-col justify-center">
