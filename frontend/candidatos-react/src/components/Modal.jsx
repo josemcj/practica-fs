@@ -68,6 +68,11 @@ function Modal({ animarModal, closeModal, candidato, setDocActualizado }) {
     }
   };
 
+  const handleDeshacerCambios = () => {
+    setHabilidadesModificadasArr(habilidades);
+    setHabilidadesModificadas(false);
+  };
+
   return (
     <div
       className={`h-screen bg-white fixed top-0 bottom-0 left-0 right-0 px-4 py-8 flex flex-col items-center transition-all ease-in-out duration-300 ${
@@ -106,24 +111,6 @@ function Modal({ animarModal, closeModal, candidato, setDocActualizado }) {
 
         <h3 className="font-bold text-2xl mb-3">Habilidades</h3>
 
-        {/* {habilidadesModificadasArr.length ?
-            <ul className="list-disc list-inside">
-                {habilidadesModificadasArr.map((habilidad, index) => (
-                  <div className="flex justify-between" key={index}>
-                    <li className="my-auto">{habilidad}</li>
-                    <button onClick={() => handleEliminarHabilidad(habilidad)}>
-                      <FontAwesomeIcon
-                        icon={faTrash}
-                        style={{ color: '#fff' }}
-                        className="my-auto p-2 h-3 w-3 md:h-5 md:w-5 transition-all rounded-lg cursor-pointer bg-red-500 hover:bg-red-400"
-                      />
-                    </button>
-                  </div>
-                )}
-            </ul>:(
-              <p className='mt-4'>No se han agregado habilidades aún</p>
-            )} */}
-
         {habilidadesModificadasArr.length ? (
           <ul className="list-disc list-inside">
             {habilidadesModificadasArr.map((habilidad, index) => (
@@ -144,12 +131,21 @@ function Modal({ animarModal, closeModal, candidato, setDocActualizado }) {
         )}
 
         {habilidadesModificadas && (
-          <button
-            className="bg-slate-900 hover:bg-slate-800 text-white w-full rounded mt-8 p-2 transition-all"
-            onClick={() => handleGuardarCambios()}
-          >
-            Guardar cambios
-          </button>
+          <div className="flex gap-3 mt-8">
+            <button
+              className="p-2 border border-gray-300 bg-white hover:bg-gray-300 transition-all rounded w-1/2"
+              onClick={() => handleDeshacerCambios()}
+            >
+              Deshacer cambios
+            </button>
+
+            <button
+              className="bg-slate-900 hover:bg-slate-800 text-white w-1/2 rounded p-2 transition-all"
+              onClick={() => handleGuardarCambios()}
+            >
+              Guardar cambios
+            </button>
+          </div>
         )}
       </div>
     </div>
