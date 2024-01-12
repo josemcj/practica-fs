@@ -9,7 +9,7 @@ const CardContainer = styled.div`
   }
 `;
 
-function CardCandidato() {
+function CardCandidato({ openModal }) {
   return (
     <CardContainer className="bg-white p-6 border mb-5">
       <div>
@@ -20,7 +20,10 @@ function CardCandidato() {
       </div>
 
       <div className="flex justify-end my-auto">
-        <button className="p-4 border border-gray-300 bg-gray-100 hover:bg-gray-300 transition-all rounded">
+        <button
+          className="p-4 border border-gray-300 bg-gray-100 hover:bg-gray-300 transition-all rounded"
+          onClick={() => openModal()}
+        >
           Ver detalles
         </button>
       </div>
