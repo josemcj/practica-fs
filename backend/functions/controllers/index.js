@@ -19,12 +19,13 @@ const getCandidatos = async (req, res) => {
     const result = await db.collection('candidatos').get();
 
     const data = result.docs.map((doc) => {
-      const { nombre, habilidades } = doc.data();
+      const { nombre, habilidades, fecha_entrevista } = doc.data();
 
       return {
         id: doc.id,
         nombre,
         habilidades,
+        fecha_entrevista,
       };
     });
 

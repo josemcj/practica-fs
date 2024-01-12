@@ -14,6 +14,8 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   // Ayuda a agregar animación.
   const [animarModal, setAnimarModal] = useState(false);
+  const [candidatosList, setCandidatosList] = useState([]);
+  const [candidatoSelected, setCandidatoSelected] = useState({});
 
   /**
    * Abre el modal y añade animación de apertura.
@@ -35,12 +37,15 @@ function App() {
     }, 300);
   };
 
+  /**
+   * Consulta a la API.
+   */
   useEffect(() => {
     const getCandidatos = async () => {
       const respuesta = await fetch(URL_API_CANDIDATOS);
       const resultado = await respuesta.json();
 
-      console.log(resultado);
+      setCandidatosList(resultado.data);
     };
 
     getCandidatos();
@@ -53,10 +58,22 @@ function App() {
       </h1>
 
       {isModalOpen && (
-        <Modal animarModal={animarModal} closeModal={closeModal} />
+        <Modal
+          animarModal={animarModal}
+          closeModal={closeModal}
+          candidato={candidatoSelected}
+        />
       )}
 
-      <CardCandidato openModal={openModal} />
+      {/* <CardCandidato openModal={openModal} /> */}
+      {candidatosList.map((candidato) => (
+        <CardCandidato
+          key={candidato.id}
+          openModal={openModal}
+          candidato={candidato}
+          setCandidatoSelected={setCandidatoSelected}
+        />
+      ))}
     </div>
   );
 }
