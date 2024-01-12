@@ -55,6 +55,12 @@ const getCandidatoById = async (req, res) => {
   }
 };
 
+/**
+ * Creates a new document in the database.
+ *
+ * @param {string} req.body.nombre     Candidate's name.
+ * @param {array} req.body.habilidades Technologies that the candidate knows.
+ */
 const addCandidato = async (req, res) => {
   const { nombre, habilidades } = req.body;
 
@@ -74,8 +80,32 @@ const addCandidato = async (req, res) => {
   }
 };
 
+/**
+ * Edits an existing document in the database, given by its ID.
+ *
+ * @param {string} req.body.id         Candidate's ID.
+ * @param {string} req.body.nombre     Candidate's name.
+ * @param {array} req.body.habilidades Technologies that the candidate knows.
+ */
+const editCandidato = async (req, res) => {
+  const { id } = req.params;
+  const { nombre, habilidades } = req.body;
+
+  try {
+    const candidato = db.collection('candidatos').doc(id);
+
+    await candidato.set({ nombre, habilidades });
+    res.status(200).json({
+      message: 'Candidato modificado correctamente',
+    });
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+};
+
 module.exports = {
   getCandidatos,
   getCandidatoById,
   addCandidato,
+  editCandidato,
 };
