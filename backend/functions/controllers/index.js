@@ -35,7 +35,7 @@ const getCandidatos = async (req, res) => {
 };
 
 /**
- * Get a `candidato` by their ID.
+ * Get a `candidato` by its ID.
  * @param {string} req.params.id ID of document.
  */
 const getCandidatoById = async (req, res) => {
