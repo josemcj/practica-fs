@@ -83,9 +83,9 @@ const addCandidato = async (req, res) => {
 /**
  * Edits an existing document in the database, given by its ID.
  *
- * @param {string} req.body.id         Candidate's ID.
- * @param {string} req.body.nombre     Candidate's name.
- * @param {array} req.body.habilidades Technologies that the candidate knows.
+ * @param {string}  req.params.id         Candidate's ID.
+ * @param {string}  req.body.nombre       Candidate's name.
+ * @param {array}   req.body.habilidades  Technologies that the candidate knows.
  */
 const editCandidato = async (req, res) => {
   const { id } = req.params;
