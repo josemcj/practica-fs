@@ -5,8 +5,9 @@ Para el diseño, implementa Tailwind CSS.
 ## Contenido
 
 - [Funcionalidad (Front End)](#funcionalidad-front-end)
+- [Funcionalidad (Back End)](#funcionalidad-back-end)
 
-## Funcionalidad (Front End) {#funcionalidad-front-end}
+## Funcionalidad (Front End)
 
 La aplicación muestra una lista de candidatos en la página principal. Cada candidato tiene un card con información básica, incluyendo nombre y fecha de entrevista.
 
