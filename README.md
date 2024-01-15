@@ -6,6 +6,10 @@ Para el diseño, implementa Tailwind CSS.
 
 - [Funcionalidad (Front End)](#funcionalidad-front-end)
 - [Funcionalidad (Back End)](#funcionalidad-back-end)
+  - [1. Obtener todos los candidatos](#1-obtener-todos-los-candidatos)
+  - [2. Obtener información de un candidato por su ID](#2-obtener-información-de-un-candidato-por-su-id)
+  - [3. Crear un nuevo candidato](#3-crear-un-nuevo-candidato)
+  - [4. Editar un candidato dado por su ID](#4-editar-un-candidato-dado-por-su-id)
 
 ## Funcionalidad (Front End)
 
@@ -21,7 +25,7 @@ Puedes agregar o eliminar habilidades. Cuando exista alguna modificación en las
 
 ## Funcionalidad (Back End)
 
-El Back End está realizado en Node.js con el framework Express y Firebase Firestore Database.
+El Back End está realizado en Node.js con el framework Express y Firestore Database de Firebase.
 
 La API proporciona servicios para gestionar la información de los candidatos.
 
