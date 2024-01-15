@@ -1,6 +1,6 @@
-# Aplicación Full Stack con React, Node.js, Express y Firebase Functions
+# Aplicación Full Stack con React, Node.js, Express y Firebase
 
-Para el diseño, implementa Tailwind CSS.
+Se usó Firebase Functions para el despliegue del Back End y Firestore Database para almacenar los datos. Para el diseño, implementa Tailwind CSS.
 
 ## Contenido
 
