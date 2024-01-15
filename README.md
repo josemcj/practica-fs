@@ -25,7 +25,7 @@ Puedes agregar o eliminar habilidades. Cuando exista alguna modificación en las
 
 ## Funcionalidad (Back End)
 
-El Back End está realizado en Node.js con el framework Express y Firestore Database de Firebase.
+El Back End está realizado en Node.js con el framework Express, utilizando Firebase Functions y Firestore Database.
 
 La API proporciona servicios para gestionar la información de los candidatos.
 
